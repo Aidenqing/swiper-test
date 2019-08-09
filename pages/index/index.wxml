@@ -1,29 +1,26 @@
-<!-- <view class = 'container'>
-    <view class='content' >
-      <view class='video-box' bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend" animation="{{animationData}}"  wx:key='index' wx:for="{{exhibits}}">
-       <block wx:if="{{idx==index+1}}">
-         <view data-index='{{index}}' catchtap='next' data-id='{{index+1}}' id="video{{item.id}}" class="next">下一个s{{item.id}}</view>
-         </block> 
-           <image wx:if="{{item.exhibitsVideo==''&&idx == index+1}}" src='{{item.coverImage}}' class='img'  style="height:{{height}}px"></image>
-         <video style="height:{{height}}px" objectFit='fill' wx:else  autoplay='{{true}}' src="{{item.exhibitsVideo}}" custom-cache="{{false}}"   data-id='{{item.id}}' autoplay="{{false}}" id="video{{item.id}}" page-gesture="{{false}}" controls='{{false}}' >
-          <cover-view data-index='{{index}}' catchtap='next' data-id='{{item.id}}' id="video{{item.id}}" class="next">下一个{{item.id}}</cover-view>
-         </video>
-      </view>
-    </view>
-</view> -->
 
-<!-- 
-       <image wx:if="{{item.exhibitsVideo==''&&idx == index+1}}" src='{{item.coverImage}}' class='img'  style="height:{{height}}px"></image>
-    
-      <video style="height:{{height}}px" objectFit='fill' wx:elif="{{item.exhibitsVideo!=''&&idx == index+1}}" autoplay='{{true}}' src="{{item.exhibitsVideo}}" custom-cache="{{false}}" data-id='{{index+1}}' id="video{{index+1}}" page-gesture="{{false}}" controls='{{false}}'>
-        <cover-view data-index='{{index}}' catchtap='next' data-id='{{index+1}}' id="video{{index+2}}" class="next">下一个</cover-view>
-      </video> -->
 
 <view class='video-box'>
-  <swiper vertical="true" circular="{{true}}" bindanimationfinish="afinish" bindchange="bchange" current="{{0}}">
+  <swiper vertical="true" circular="{{true}}" bindanimationfinish="afinish" bindchange="bchange" current="{{1}}">
   
-    <swiper-item>
-      <view id="cur"  class="item" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend">
+
+  <swiper-item item-id="{{preSubject.id}}">
+      <view id="pre"  class="item" bindtouchstart="touchstart" bindtouchmove="touchmove" >
+        <block wx:if="{{preSubject.exhibitsVideo==''}}">
+          <image mode="aspectFill" src="{{preSubject.coverImage}}">
+         <view class="next"> {{preSubject.exhibitsName}}</view>
+          </image>
+        </block>
+        <block wx:else>
+          <video src="{{preSubject.exhibitsVideo}}">
+             <cover-view  class="next">下一个{{preSubject.exhibitsName}}</cover-view>
+          </video>
+        </block>
+      </view>
+    </swiper-item>
+
+    <swiper-item item-id="{{curSubject.id}}">
+      <view id="cur"  class="item" bindtouchstart="touchstart" bindtouchmove="touchmove" >
         <block wx:if="{{curSubject.exhibitsVideo==''}}">
           <image mode="aspectFill" src="{{curSubject.coverImage}}">
          <view class="next"> {{curSubject.exhibitsName}}</view>
@@ -37,8 +34,8 @@
       </view>
     </swiper-item>
 
-    <swiper-item>
-      <view id='next' class="item" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend">
+    <swiper-item item-id="{{nextSubject.id}}">
+      <view id='next' class="item" bindtouchstart="touchstart" bindtouchmove="touchmove">
         <block wx:if="{{nextSubject.exhibitsVideo==''}}">
           <image mode="aspectFill" src="{{nextSubject.coverImage}}">
                              <view class="next"> {{nextSubject.exhibitsName}}</view>
